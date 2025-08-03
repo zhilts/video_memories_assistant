@@ -34,7 +34,7 @@ video_memories_assistant/
 - [x] Define project structure and purpose
 - [x] Enumerate video files and break them into virtual segments (e.g., 10 seconds)
 - [x] Extract 1–2 representative frames per segment using ffmpeg
-- [ ] Run frame analysis via vision model (e.g., BLIP-2 or ImageBind)
+- [x] Run frame analysis via vision model (e.g., BLIP-2 or ImageBind)
 - [ ] Extract audio and run transcription via Whisper
 - [ ] Combine results into a structured JSON
 - [ ] Use LLM to group and summarize segments into coherent "stories"
@@ -53,9 +53,12 @@ video_memories_assistant/
   - Save frames to cache directory
   - Extract frames at 1/3 and 2/3 of segment duration
   - Organize frames in segment-specific directories
-- ⏳ **Step 3: Image analysis** - Planned
-  - Use vision model (BLIP-2/ImageBind) to describe frames
+- ✅ **Step 3: Image analysis** - Complete
+  - Use vision model (BLIP-2) to describe frames
   - Generate image descriptions for each segment
+  - Multiple prompts for comprehensive analysis
+  - Combine descriptions from multiple frames
+  - Save analysis results to JSON files
 - ⏳ **Step 4: Audio transcription** - Planned
   - Extract audio from video segments
   - Use Whisper for speech transcription

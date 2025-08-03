@@ -19,6 +19,9 @@ poetry run video-memories enumerate /path/to/media/directory
 # Extract frames from segments
 poetry run video-memories extract-frames /path/to/media/directory
 
+# Analyze extracted frames using vision model
+poetry run video-memories analyze-images /path/to/media/directory
+
 # View processing status
 poetry run video-memories status /path/to/media/directory
 
@@ -40,6 +43,12 @@ poetry run video-memories enumerate /tmp/my_videos
 
 # Extract frames
 poetry run video-memories extract-frames /tmp/my_videos
+
+# Analyze frames (requires ~15GB RAM for BLIP-2 model)
+poetry run video-memories analyze-images /tmp/my_videos
+
+# For faster processing, use a smaller model:
+poetry run video-memories analyze-images /tmp/my_videos --model Salesforce/blip2-opt-1.7b
 
 # Check status
 poetry run video-memories status /tmp/my_videos

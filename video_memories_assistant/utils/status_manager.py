@@ -61,6 +61,27 @@ class StatusManager:
         
         self.save_status(current_status)
     
+    def update_segment_analysis(self, segment_id: str, analysis_data: Dict[str, Any]):
+        """Update analysis information for specific segment"""
+        current_status = self.load_status()
+        segments = current_status.get('segments', [])
+        
+        for segment in segments:
+            if segment.get('segment_id') == segment_id:
+                segment['analysis'] = analysis_data
+                # Check if analysis was successful
+                if analysis_data.get('frame_analyses'):
+                    first_frame = analysis_data['frame_analyses'][0]
+                    if any('Error analyzing image' in desc for desc in first_frame.values() if isinstance(desc, str)):
+                        segment['status'] = 'analyze_failed'
+                    else:
+                        segment['status'] = 'analyzed'
+                else:
+                    segment['status'] = 'analyze_failed'
+                break
+        
+        self.save_status(current_status)
+    
     def get_segments_by_status(self, status: str) -> list:
         """Get all segments with specific status"""
         current_status = self.load_status()
