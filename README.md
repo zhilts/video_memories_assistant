@@ -16,6 +16,9 @@ poetry install
 # Enumerate video files and create segments
 poetry run video-memories enumerate /path/to/media/directory
 
+# Extract frames from segments
+poetry run video-memories extract-frames /path/to/media/directory
+
 # View processing status
 poetry run video-memories status /path/to/media/directory
 
@@ -34,6 +37,9 @@ cp *.mp4 /tmp/my_videos/
 
 # Run analysis
 poetry run video-memories enumerate /tmp/my_videos
+
+# Extract frames
+poetry run video-memories extract-frames /tmp/my_videos
 
 # Check status
 poetry run video-memories status /tmp/my_videos
@@ -91,5 +97,6 @@ ffmpeg -f lavfi -i testsrc=duration=30:size=320x240:rate=1 -c:v libx264 -t 30 /t
 
 # Test with real file
 poetry run video-memories enumerate /tmp/test_media
+poetry run video-memories extract-frames /tmp/test_media
 poetry run video-memories status /tmp/test_media
 ``` 

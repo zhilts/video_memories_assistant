@@ -33,7 +33,7 @@ video_memories_assistant/
 ## 📌 Workflow Steps
 - [x] Define project structure and purpose
 - [x] Enumerate video files and break them into virtual segments (e.g., 10 seconds)
-- [ ] Extract 1–2 representative frames per segment using ffmpeg
+- [x] Extract 1–2 representative frames per segment using ffmpeg
 - [ ] Run frame analysis via vision model (e.g., BLIP-2 or ImageBind)
 - [ ] Extract audio and run transcription via Whisper
 - [ ] Combine results into a structured JSON
@@ -48,9 +48,11 @@ video_memories_assistant/
   - Get video metadata via ffmpeg
   - Create virtual segments by 10 seconds
   - Save status to JSON file
-- ⏳ **Step 2: Frame extraction via ffmpeg** - In Progress
+- ✅ **Step 2: Frame extraction via ffmpeg** - Complete
   - Extract representative frames from each segment
   - Save frames to cache directory
+  - Extract frames at 1/3 and 2/3 of segment duration
+  - Organize frames in segment-specific directories
 - ⏳ **Step 3: Image analysis** - Planned
   - Use vision model (BLIP-2/ImageBind) to describe frames
   - Generate image descriptions for each segment

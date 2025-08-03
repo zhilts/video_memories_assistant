@@ -7,6 +7,7 @@ import sys
 import argparse
 from .utils.video_utils import VideoProcessor
 from .utils.status_manager import StatusManager
+from .utils.frame_extractor import FrameExtractor
 
 def enumerate_command(media_dir: str, segment_duration: int = 10, cache_dir: str = None):
     """Enumerate video files and create segments"""
@@ -32,6 +33,42 @@ def enumerate_command(media_dir: str, segment_duration: int = 10, cache_dir: str
         print(f"❌ Error: {e}")
         sys.exit(1)
 
+def extract_frames_command(media_dir: str, frames_per_segment: int = 2):
+    """Extract frames from video segments"""
+    try:
+        processor = VideoProcessor(media_dir)
+        status_manager = StatusManager(processor.cache_dir)
+        frame_extractor = FrameExtractor(processor.cache_dir)
+        
+        # Get current status
+        current_status = status_manager.load_status()
+        segments = current_status.get('segments', [])
+        
+        if not segments:
+            print("❌ No segments found. Run enumerate command first.")
+            return
+        
+        print(f"📸 Starting frame extraction for {len(segments)} segments...")
+        
+        # Extract frames for all segments
+        frame_results = frame_extractor.extract_frames_for_all_segments(segments, frames_per_segment)
+        
+        # Update status with frame information
+        for segment_id, frame_paths in frame_results.items():
+            status_manager.update_segment_frames(segment_id, frame_paths)
+        
+        # Get frames summary
+        frames_summary = frame_extractor.get_frames_summary()
+        
+        print(f"\n✅ Frame extraction completed!")
+        print(f"📸 Total segments processed: {frames_summary['total_segments']}")
+        print(f"🖼️  Total frames extracted: {frames_summary['total_frames']}")
+        print(f"💾 Total size: {frames_summary['total_size_mb']} MB")
+        
+    except Exception as e:
+        print(f"❌ Error: {e}")
+        sys.exit(1)
+
 def status_command(media_dir: str):
     """Show current processing status"""
     try:
@@ -52,6 +89,13 @@ def status_command(media_dir: str):
                 print(f"   📈 Segment statistics:")
                 for status, count in status_counts.items():
                     print(f"      {status}: {count}")
+            
+            # Frames summary if available
+            frame_extractor = FrameExtractor(processor.cache_dir)
+            frames_summary = frame_extractor.get_frames_summary()
+            if frames_summary['total_frames'] > 0:
+                print(f"   📸 Frames extracted: {frames_summary['total_frames']}")
+                print(f"   💾 Frames size: {frames_summary['total_size_mb']} MB")
         else:
             print("📭 Status not found. Run enumerate command to start processing.")
             
@@ -70,6 +114,12 @@ def main():
                                 help='Segment duration in seconds (default: 10)')
     enumerate_parser.add_argument('--cache', '-c', help='Path to cache directory')
     
+    # Extract frames command
+    extract_parser = subparsers.add_parser('extract-frames', help='Extract frames from video segments')
+    extract_parser.add_argument('media_dir', help='Path to directory with media files')
+    extract_parser.add_argument('--frames', '-f', type=int, default=2,
+                               help='Number of frames per segment (default: 2)')
+    
     # Status command
     status_parser = subparsers.add_parser('status', help='Show current processing status')
     status_parser.add_argument('media_dir', help='Path to directory with media files')
@@ -78,6 +128,8 @@ def main():
     
     if args.command == 'enumerate':
         enumerate_command(args.media_dir, args.duration, args.cache)
+    elif args.command == 'extract-frames':
+        extract_frames_command(args.media_dir, args.frames)
     elif args.command == 'status':
         status_command(args.media_dir)
     else:

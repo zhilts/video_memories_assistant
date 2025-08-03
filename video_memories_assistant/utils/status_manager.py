@@ -1,6 +1,6 @@
 import json
 from pathlib import Path
-from typing import Dict, Any
+from typing import Dict, Any, List
 
 
 class StatusManager:
@@ -44,6 +44,19 @@ class StatusManager:
         for segment in segments:
             if segment.get('segment_id') == segment_id:
                 segment['status'] = status
+                break
+        
+        self.save_status(current_status)
+    
+    def update_segment_frames(self, segment_id: str, frame_paths: List[str]):
+        """Update frame information for specific segment"""
+        current_status = self.load_status()
+        segments = current_status.get('segments', [])
+        
+        for segment in segments:
+            if segment.get('segment_id') == segment_id:
+                segment['frames'] = frame_paths
+                segment['status'] = 'frames_extracted'
                 break
         
         self.save_status(current_status)
