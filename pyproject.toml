@@ -1,0 +1,13 @@
+[tool.poetry]
+name = "video-memories-assistant"
+version = "0.1.0"
+description = "CLI tool for analyzing video footage and extracting memory highlights"
+authors = ["Sergey Zhiltsov <zhiltsov.s.i@gmail.com>"]
+packages = [{ include = "video_memories_assistant" }]
+
+[tool.poetry.dependencies]
+python = "^3.10"
+typer = { extras = ["all"], version = "^0.12.3" }
+
+[tool.poetry.scripts]
+video-memories = "video_memories_assistant.cli:app"

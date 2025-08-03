@@ -1,0 +1,22 @@
+.cache/
+__pycache__/
+*.py[cod]
+*$py.class
+*.log
+
+# Virtual environments
+.env
+.venv/
+env/
+venv/
+
+# Editors and OS
+.idea/
+.vscode/
+.DS_Store
+Thumbs.db
+*.swp
+*~
+
+# Jupyter
+.ipynb_checkpoints
