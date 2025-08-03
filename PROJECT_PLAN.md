@@ -32,7 +32,7 @@ video_memories_assistant/
 
 ## 📌 Workflow Steps
 - [x] Define project structure and purpose
-- [ ] Enumerate video files and break them into virtual segments (e.g., 10 seconds)
+- [x] Enumerate video files and break them into virtual segments (e.g., 10 seconds)
 - [ ] Extract 1–2 representative frames per segment using ffmpeg
 - [ ] Run frame analysis via vision model (e.g., BLIP-2 or ImageBind)
 - [ ] Extract audio and run transcription via Whisper
@@ -40,6 +40,35 @@ video_memories_assistant/
 - [ ] Use LLM to group and summarize segments into coherent "stories"
 - [ ] Select top stories/highlights
 - [ ] (Optional) Generate a rough cut using ffmpeg or export XML to video editors
+
+## 📝 Development Status
+
+- ✅ **Step 1: Video file enumeration and segmentation** - Complete
+  - Find all video files in directory
+  - Get video metadata via ffmpeg
+  - Create virtual segments by 10 seconds
+  - Save status to JSON file
+- ⏳ **Step 2: Frame extraction via ffmpeg** - In Progress
+  - Extract representative frames from each segment
+  - Save frames to cache directory
+- ⏳ **Step 3: Image analysis** - Planned
+  - Use vision model (BLIP-2/ImageBind) to describe frames
+  - Generate image descriptions for each segment
+- ⏳ **Step 4: Audio transcription** - Planned
+  - Extract audio from video segments
+  - Use Whisper for speech transcription
+- ⏳ **Step 5: Result combination** - Planned
+  - Combine image and audio analysis results
+  - Create comprehensive segment descriptions
+- ⏳ **Step 6: Story grouping** - Planned
+  - Use LLM to group related segments into stories
+  - Identify narrative connections between segments
+- ⏳ **Step 7: Highlight selection** - Planned
+  - Select most meaningful moments from stories
+  - Rank segments by importance/relevance
+- ⏳ **Step 8: Export** - Planned
+  - Generate rough cut video or XML for video editors
+  - Export final highlights compilation
 
 ## 🔄 Example JSON Fragment
 ```json
